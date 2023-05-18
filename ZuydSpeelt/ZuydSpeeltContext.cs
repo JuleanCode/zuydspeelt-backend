@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 namespace ZuydSpeelt
 {
     public class ZuydSpeeltContext : DbContext
@@ -21,8 +20,21 @@ namespace ZuydSpeelt
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            var connectionStringBuilder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection"));
+            string? customServer = Configuration["db_host"];
+            string? customDb = Configuration["db_database"];
+            string? customUser = Configuration["db_user"];
+            string? customPassword = Configuration["db_password"];
+
+            if (!string.IsNullOrEmpty(customServer) && !string.IsNullOrEmpty(customDb) && !string.IsNullOrEmpty(customUser) && !string.IsNullOrEmpty(customPassword))
+            {
+                connectionStringBuilder.DataSource = customServer;
+                connectionStringBuilder.InitialCatalog = customDb;
+                connectionStringBuilder.UserID = customUser;
+                connectionStringBuilder.Password = customPassword;
+                connectionStringBuilder.IntegratedSecurity = false; // disable Windows Authentication
+            }
+            optionsBuilder.UseSqlServer(connectionStringBuilder.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
