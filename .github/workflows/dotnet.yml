@@ -21,8 +21,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build
+    - name: Install Nunit
+      run: dotnet add package NUnit --version 3.13.3
     - name: Test
       run: dotnet test
-  tests:
-    name: Unit Testing
-    runs-on: 
