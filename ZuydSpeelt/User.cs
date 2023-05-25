@@ -8,11 +8,11 @@ namespace ZuydSpeelt
         [Key, Required]
         public int UserId { get; set; }
         [Required, DataType(DataType.Text)]
-        public string? Username { get; set; }
+        public string Username { get; set; }
         [Required, DataType(DataType.Password)]
-        public string? Password { get; set; }
+        public string Password { get; set; }
         [Required, DataType(DataType.EmailAddress)]
-        public string? Email { get; set; }
+        public string Email { get; set; }
         [Required, DataType(DataType.DateTime)]
         public DateTime RegistrationDate { get; set; } = DateTime.Now; // Default value when an object is made. So during registration, this is the current date and time.
 

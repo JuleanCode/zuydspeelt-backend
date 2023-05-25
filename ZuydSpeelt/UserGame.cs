@@ -13,7 +13,7 @@ namespace ZuydSpeelt
         public int Score { get; set; }
 
         // Relationships
-        public User? User { get; set; }
-        public Game? Game { get; set; }
+        public User User { get; set; }
+        public Game Game { get; set; }
     }
 }
