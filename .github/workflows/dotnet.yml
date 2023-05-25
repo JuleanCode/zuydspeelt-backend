@@ -20,6 +20,6 @@ jobs:
       run: dotnet build
     - name: Install Nunit
       run: dotnet add package NUnit --version 3.13.3
-      working-directory: ../ZuydSpeelt
+      working-directory: ZuydSpeelt
     - name: Test
       run: dotnet test
