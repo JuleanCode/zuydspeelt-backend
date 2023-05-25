@@ -13,12 +13,12 @@ namespace ZuydSpeelt
         [Required, ForeignKey("Game")]
         public int GameId { get; set; }
         [Required, DataType(DataType.Text)]
-        public string CommentText { get; set; }
+        public string? CommentText { get; set; }
         [Required, DataType(DataType.Date)]
         public DateTime CommentDate { get; set; } = DateTime.Now;
 
         // Relationships
-        public User User { get; set; }
-        public Game Game { get; set; }
+        public User? User { get; set; }
+        public Game? Game { get; set; }
     }
 }
