@@ -1,0 +1,22 @@
+---
+version: "3.4"
+services:
+  db:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123!
+    ports:
+      - "1433:1433"
+
+  webapi:
+    container_name: webapi
+    build: ./
+    image: webapi:1.0
+    ports:
+      - "5000:80"
+    environment:
+      ZUYDSPEELT_CONNECTIONSTRING: Server=sqlserver;Database=ZuydSpeeltDatabase; User Id=sa; Password=Password123!; TrustServerCertificate=True
+    depends_on:
+      - db
