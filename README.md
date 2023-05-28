@@ -17,7 +17,7 @@ docker-compose up -d
 This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
 
 
-## Setting Up Your `.env` File
+## Setting up your `.env` file
 In the root of the project, you'll find a file named `.env.example.` This file outlines the necessary environment variables needed for the application to run correctly.
 
 To set these variables:
@@ -28,7 +28,7 @@ To set these variables:
 Remember, the `.env` file will not and should not be committed to GitHub.
 
 
-# Considering PostgreSQL Over SQL Server
+# Considering PostgreSQL over SQL Server
 
 PostgreSQL stands as a strong candidate for our project's database management system. Its open-source nature ensures cross-platform compatibility, promising consistent performance across various operating systems.
 
