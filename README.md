@@ -18,7 +18,7 @@ This will run a local instance of the database and the API. The API will be avai
 
 
 ## Setting up your `.env` file
-In the root of the project, you'll find a file named `.env.example.` This file outlines the necessary environment variables needed for the application to run correctly.
+In the root of the project, you'll find a file named `.env.example`. This file outlines the necessary environment variables needed for the application to run correctly.
 
 To set these variables:
 
