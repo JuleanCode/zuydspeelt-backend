@@ -11,7 +11,7 @@
 To start developing, simply run the following command:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
