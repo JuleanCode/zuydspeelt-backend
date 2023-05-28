@@ -1,5 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+
 namespace ZuydSpeelt
 {
     public class ZuydSpeeltContext : DbContext
@@ -20,21 +22,7 @@ namespace ZuydSpeelt
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // var connectionStringBuilder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection"));
-            // string? customServer = Configuration["db_host"];
-            // string? customDb = Configuration["db_database"];
-            // string? customUser = Configuration["db_user"];
-            // string? customPassword = Configuration["db_password"];
-
-            // if (!string.IsNullOrEmpty(customServer) && !string.IsNullOrEmpty(customDb) && !string.IsNullOrEmpty(customUser) && !string.IsNullOrEmpty(customPassword))
-            // {
-            //     connectionStringBuilder.DataSource = customServer;
-            //     connectionStringBuilder.InitialCatalog = customDb;
-            //     connectionStringBuilder.UserID = customUser;
-            //     connectionStringBuilder.Password = customPassword;
-            //     connectionStringBuilder.IntegratedSecurity = false; // disable Windows Authentication
-            // }
-            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ZUYDSPEELT_CONNECTIONSTRING"));
+            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("ZUYDSPEELT_CONNECTIONSTRING"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
