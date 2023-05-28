@@ -16,8 +16,8 @@ docker compose up -d
 
 This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
 
-
 ## Setting up your `.env` file
+
 In the root of the project, you'll find a file named `.env.example`. This file outlines the necessary environment variables needed for the application to run correctly.
 
 To set these variables:
@@ -27,6 +27,18 @@ To set these variables:
 
 Remember, the `.env` file will not and should not be committed to GitHub.
 
+# Stopping the Database and API
+
+```bash
+docker compose stop
+```
+
+OR
+
+```bash
+docker compose down
+# Remember that this command removes all the data from the database. If you want to keep the data, use the first command.
+```
 
 # Considering PostgreSQL over SQL Server
 
