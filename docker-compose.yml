@@ -2,21 +2,20 @@
 version: "3.4"
 services:
   db:
-    container_name: sqlserver
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: postgres
+    image: postgres
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Password123!
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
-      - "1433:1433"
+      - "${DB_PORT}:5432"
 
   webapi:
     container_name: webapi
     build: ./
-    image: drtuup/webapi:1.0
     ports:
-      - "8080:80"
+      - "${API_PORT}:${API_DOCKER_PORT}"
     environment:
-      ZUYDSPEELT_CONNECTIONSTRING: Server=sqlserver;Database=ZuydSpeeltDatabase; User Id=sa; Password=Password123!; TrustServerCertificate=True
+      ZUYDSPEELT_CONNECTIONSTRING: User ID=${DB_USER};Password=${DB_PASSWORD};Host=${DB_HOST};Port=${DB_PORT};Database=${DB_NAME};
     depends_on:
       - db
