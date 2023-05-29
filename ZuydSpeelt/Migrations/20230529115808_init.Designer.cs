@@ -12,7 +12,7 @@ using ZuydSpeelt;
 namespace ZuydSpeelt.Migrations
 {
     [DbContext(typeof(ZuydSpeeltContext))]
-    [Migration("20230528141853_init")]
+    [Migration("20230529115808_init")]
     partial class init
     {
         /// <inheritdoc />
