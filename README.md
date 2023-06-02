@@ -6,16 +6,6 @@
 - .NET Core SDK
 - Docker
 
-## Getting started
-
-To start developing, simply run the following command:
-
-```bash
-docker compose up -d
-```
-
-This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
-
 ## Setting up your `.env` file
 
 In the root of the project, you'll find a file named `.env.example`. This file outlines the necessary environment variables needed for the application to run correctly.
@@ -26,6 +16,17 @@ To set these variables:
 2. Inside the `.env` file, replace the placeholder values with the actual values relevant to your local development environment.
 
 Remember, the `.env` file will not and should not be committed to GitHub.
+
+## Start developing
+
+To start developing, simply run the following command:
+
+```bash
+docker compose up -d
+```
+
+This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
+
 
 # Stopping the Database and API
 
