@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ZuydSpeelt;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,5 +25,16 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<ZuydSpeeltContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.Run();
