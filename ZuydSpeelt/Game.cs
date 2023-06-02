@@ -9,7 +9,7 @@ namespace ZuydSpeelt
         [Key]
         public int GameId { get; set; }
         [Required, DataType(DataType.Text)]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
         [Required, DataType(DataType.DateTime)]
         public DateTime UploadDate { get; set; }
         [Required]
@@ -18,7 +18,7 @@ namespace ZuydSpeelt
         public int CategoryId { get; set; }
 
         // Relationships
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
         public List<User> Users { get; } = new(); // Ignored in OnModelCreating to prevent double many to many tables
         public List<Rating> Ratings { get; } = new();
         public List<Comment> Comments { get; } = new();

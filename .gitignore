@@ -10,6 +10,9 @@
 *.userosscache
 *.sln.docstates
 
+# Environment file
+.env
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -364,3 +367,4 @@ FodyWeavers.xsd
 
 # Visual Studio Code Workspace Settings
 .vscode/
+.DS_Store

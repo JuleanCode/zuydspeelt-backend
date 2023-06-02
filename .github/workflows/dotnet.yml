@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "master", "dev" ]
   pull_request:
     branches: [ "master", "dev" ]
 
@@ -20,6 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build
     - name: Test
       run: dotnet test --no-build --verbosity normal
+

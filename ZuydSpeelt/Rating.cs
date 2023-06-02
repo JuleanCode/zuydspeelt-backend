@@ -16,7 +16,7 @@ namespace ZuydSpeelt
         public int RatingValue { get; set; }
 
         // Relationships
-        public User User { get; set; }
-        public Game Game { get; set; }
+        public User User { get; set; } = null!;
+        public Game Game { get; set; } = null!;
     }
 }
