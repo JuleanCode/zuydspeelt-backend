@@ -1,8 +1,8 @@
 name: .NET
 
 on:
-  push:
   pull_request:
+    branches: [ "master", "dev" ]
 
 jobs:
   build:
@@ -20,4 +20,5 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test
+      run: dotnet test --no-build --verbosity normal
+
