@@ -10,9 +10,6 @@ RUN dotnet restore "ZuydSpeelt/ZuydSpeelt.csproj"
 COPY . .
 WORKDIR "/src/ZuydSpeelt"
 
-# RUN dotnet tool install dotnet-ef 
-# RUN dotnet-ef database update
-
 RUN dotnet build "ZuydSpeelt.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -21,4 +18,9 @@ RUN dotnet publish "ZuydSpeelt.csproj" -c Release -o /app/publish /p:UseAppHost=
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ZuydSpeelt.dll"]
+
+# Copy wait-for-it script and make it executable
+COPY wait-for-it.sh ./
+RUN chmod +x ./wait-for-it.sh
+
+ENTRYPOINT ["./wait-for-it.sh", "db:5432", "--", "dotnet", "ZuydSpeelt.dll"]
