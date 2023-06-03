@@ -47,8 +47,8 @@ namespace ZuydSpeelt
             modelBuilder.Entity<Category>()
                 .HasData(new Category
                 {
-                    CategoryId = 1,
-                    CategoryName = "action"
+                    CategoryId = 2,
+                    CategoryName = "shooter"
                 });
 
             modelBuilder.Entity<Game>()
