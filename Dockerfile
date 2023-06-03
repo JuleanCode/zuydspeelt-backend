@@ -10,8 +10,8 @@ RUN dotnet restore "ZuydSpeelt/ZuydSpeelt.csproj"
 COPY . .
 WORKDIR "/src/ZuydSpeelt"
 
-# RUN dotnet tool install dotnet-ef 
-# RUN dotnet-ef database update
+ARG ZUYDSPEELT_CONNECTIONSTRING
+ENV ZUYDSPEELT_CONNECTIONSTRING=$ZUYDSPEELT_CONNECTIONSTRING
 
 RUN dotnet build "ZuydSpeelt.csproj" -c Release -o /app/build
 
