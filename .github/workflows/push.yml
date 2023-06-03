@@ -45,6 +45,10 @@ jobs:
         CI_CD_URL=$(az webapp deployment container config --enable-cd true --name zuydspeeltapi --resource-group B2C6B | jq -r '.CI_CD_URL')
         echo "::set-output name=ci_cd_url::$CI_CD_URL"
 
+    - name: Deploy Template
+      run: |
+        az deployment group create --resource-group B2C6B --template-file template.json --parameters parameters.json
+
     - name: Trigger Azure Deployment
       run: |
         curl -d{} ${{ steps.enable_cd.outputs.ci_cd_url }}
