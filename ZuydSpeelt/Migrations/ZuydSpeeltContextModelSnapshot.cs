@@ -43,11 +43,6 @@ namespace ZuydSpeelt.Migrations
                         {
                             CategoryId = 1,
                             CategoryName = "action"
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            CategoryName = "shooter"
                         });
                 });
 
