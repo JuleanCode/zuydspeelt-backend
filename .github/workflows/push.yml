@@ -29,3 +29,22 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/zuydspeelt-web-api:latest
         build-args: ZUYDSPEELT_CONNECTIONSTRING=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING }}
+
+    - name: Install Azure CLI and jq
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        sudo apt-get install jq
+
+    - name: Login to Azure
+      run: |
+        az login --service-principal --username ${{ secrets.AZURE_USERNAME }} --password ${{ secrets.AZURE_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT }} --output none
+
+    - name: Enable CD
+      id: enable_cd
+      run: |
+        CI_CD_URL=$(az webapp deployment container config --enable-cd true --name zuydspeeltapi --resource-group B2C6B | jq -r '.CI_CD_URL')
+        echo "::set-output name=ci_cd_url::$CI_CD_URL"
+
+    - name: Trigger Azure Deployment
+      run: |
+        curl -d{} ${{ steps.enable_cd.outputs.ci_cd_url }}
