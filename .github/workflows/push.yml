@@ -28,4 +28,4 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/zuydspeelt-web-api:latest
-        build-args: ConnectionStrings__DefaultConnection=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING }}
+        build-args: ZUYDSPEELT_CONNECTIONSTRING=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING }}
