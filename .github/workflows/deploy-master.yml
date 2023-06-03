@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Deploy to Azure
 
 on:
   push:
@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Install Azure CLI and jq
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+          sudo apt-get install jq
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -29,11 +34,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/zuydspeelt-web-api:latest
           build-args: ZUYDSPEELT_CONNECTIONSTRING=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING }}
-
-      - name: Install Azure CLI and jq
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-          sudo apt-get install jq
 
       - name: Login to Azure
         run: |
