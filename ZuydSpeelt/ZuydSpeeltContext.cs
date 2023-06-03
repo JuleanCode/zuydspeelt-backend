@@ -43,6 +43,13 @@ namespace ZuydSpeelt
                     CategoryId = 1,
                     CategoryName = "action"
                 });
+            
+            modelBuilder.Entity<Category>()
+                .HasData(new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "action"
+                });
 
             modelBuilder.Entity<Game>()
                 .HasData(new Game
