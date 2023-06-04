@@ -18,6 +18,9 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
+ARG ZUYDSPEELT_CONNECTIONSTRING
+ENV ZUYDSPEELT_CONNECTIONSTRING=$ZUYDSPEELT_CONNECTIONSTRING
+
 COPY wait-for-it.sh ./
 RUN chmod +x ./wait-for-it.sh
 
