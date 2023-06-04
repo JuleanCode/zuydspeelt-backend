@@ -21,4 +21,7 @@ COPY --from=publish /app/publish .
 ARG ZUYDSPEELT_CONNECTIONSTRING
 ENV ZUYDSPEELT_CONNECTIONSTRING=$ZUYDSPEELT_CONNECTIONSTRING
 
-ENTRYPOINT ["dotnet", "ZuydSpeelt.dll"]
+COPY wait-for-it.sh ./
+RUN chmod +x ./wait-for-it.sh
+
+ENTRYPOINT ["./wait-for-it.sh", "db:5432", "--", "dotnet", "ZuydSpeelt.dll"]
