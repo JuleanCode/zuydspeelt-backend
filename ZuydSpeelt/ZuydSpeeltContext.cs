@@ -7,13 +7,13 @@ namespace ZuydSpeelt
     public class ZuydSpeeltContext : DbContext
     {
         // Making it possible to read the connectionstring from the appsettings.json file, in the future easier to change
-        private readonly IConfiguration Configuration ;
+        private readonly IConfiguration Configuration;
         public ZuydSpeeltContext(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public DbSet<Category> Category { get; set; } = null!; 
+        public DbSet<Category> Category { get; set; } = null!;
         public DbSet<Comment> Comment { get; set; } = null!;
         public DbSet<Game> Game { get; set; } = null!;
         public DbSet<Rating> Rating { get; set; } = null!;

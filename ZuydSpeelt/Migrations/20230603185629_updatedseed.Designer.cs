@@ -12,8 +12,8 @@ using ZuydSpeelt;
 namespace ZuydSpeelt.Migrations
 {
     [DbContext(typeof(ZuydSpeeltContext))]
-    [Migration("20230602110549_seeding")]
-    partial class seeding
+    [Migration("20230603185629_updatedseed")]
+    partial class updatedseed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

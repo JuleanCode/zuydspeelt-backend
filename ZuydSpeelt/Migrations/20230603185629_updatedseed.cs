@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ZuydSpeelt.Migrations
 {
     /// <inheritdoc />
-    public partial class seeding : Migration
+    public partial class updatedseed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
