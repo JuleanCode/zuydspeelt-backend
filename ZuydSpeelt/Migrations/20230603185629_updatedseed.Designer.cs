@@ -12,8 +12,8 @@ using ZuydSpeelt;
 namespace ZuydSpeelt.Migrations
 {
     [DbContext(typeof(ZuydSpeeltContext))]
-    [Migration("20230529115808_init")]
-    partial class init
+    [Migration("20230603185629_updatedseed")]
+    partial class updatedseed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,13 @@ namespace ZuydSpeelt.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "action"
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Comment", b =>
@@ -70,6 +77,16 @@ namespace ZuydSpeelt.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comment");
+
+                    b.HasData(
+                        new
+                        {
+                            CommentId = 1,
+                            CommentDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CommentText = "Dit is een leuk spel",
+                            GameId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Game", b =>
@@ -98,6 +115,16 @@ namespace ZuydSpeelt.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Game");
+
+                    b.HasData(
+                        new
+                        {
+                            GameId = 1,
+                            CategoryId = 1,
+                            Popularity = 0,
+                            Title = "TestGame",
+                            UploadDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Rating", b =>
@@ -124,6 +151,15 @@ namespace ZuydSpeelt.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rating");
+
+                    b.HasData(
+                        new
+                        {
+                            RatingId = 1,
+                            GameId = 1,
+                            RatingValue = 5,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.User", b =>
@@ -152,6 +188,16 @@ namespace ZuydSpeelt.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "test@gmail.com",
+                            Password = "password",
+                            RegistrationDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Username = "test"
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.UserGame", b =>
@@ -173,6 +219,15 @@ namespace ZuydSpeelt.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("UserGame");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            GameId = 1,
+                            PlayDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Score = 5
+                        });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Comment", b =>
