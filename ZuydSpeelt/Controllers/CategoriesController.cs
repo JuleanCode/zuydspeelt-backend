@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-          if (_context.Category == null)
-          {
-              return NotFound();
-          }
+            if (_context.Category == null)
+            {
+                return NotFound();
+            }
             return await _context.Category.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-          if (_context.Category == null)
-          {
-              return NotFound();
-          }
+            if (_context.Category == null)
+            {
+                return NotFound();
+            }
             var category = await _context.Category.FindAsync(id);
 
             if (category == null)
@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
-            if (id != category.CategoryId)
+            if (id != category.Id)
             {
                 return BadRequest();
             }
@@ -85,14 +85,14 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-          if (_context.Category == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.Category'  is null.");
-          }
+            if (_context.Category == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.Category'  is null.");
+            }
             _context.Category.Add(category);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
+            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
 
         // DELETE: api/Categories/5
@@ -117,7 +117,7 @@ namespace ZuydSpeelt.Controllers
 
         private bool CategoryExists(int id)
         {
-            return (_context.Category?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+            return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

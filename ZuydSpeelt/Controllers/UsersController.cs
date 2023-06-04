@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
             return await _context.User.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
             var user = await _context.User.FindAsync(id);
 
             if (user == null)
@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.UserId)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
@@ -85,14 +85,14 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-          if (_context.User == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.User'  is null.");
-          }
+            if (_context.User == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.User'  is null.");
+            }
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
@@ -117,7 +117,7 @@ namespace ZuydSpeelt.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.User?.Any(e => e.UserId == id)).GetValueOrDefault();
+            return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

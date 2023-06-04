@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rating>>> GetRating()
         {
-          if (_context.Rating == null)
-          {
-              return NotFound();
-          }
+            if (_context.Rating == null)
+            {
+                return NotFound();
+            }
             return await _context.Rating.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Rating>> GetRating(int id)
         {
-          if (_context.Rating == null)
-          {
-              return NotFound();
-          }
+            if (_context.Rating == null)
+            {
+                return NotFound();
+            }
             var rating = await _context.Rating.FindAsync(id);
 
             if (rating == null)
@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRating(int id, Rating rating)
         {
-            if (id != rating.RatingId)
+            if (id != rating.Id)
             {
                 return BadRequest();
             }
@@ -85,14 +85,14 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<Rating>> PostRating(Rating rating)
         {
-          if (_context.Rating == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.Rating'  is null.");
-          }
+            if (_context.Rating == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.Rating'  is null.");
+            }
             _context.Rating.Add(rating);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRating", new { id = rating.RatingId }, rating);
+            return CreatedAtAction("GetRating", new { id = rating.Id }, rating);
         }
 
         // DELETE: api/Ratings/5
@@ -117,7 +117,7 @@ namespace ZuydSpeelt.Controllers
 
         private bool RatingExists(int id)
         {
-            return (_context.Rating?.Any(e => e.RatingId == id)).GetValueOrDefault();
+            return (_context.Rating?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

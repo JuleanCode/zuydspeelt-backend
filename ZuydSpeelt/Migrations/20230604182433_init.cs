@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ZuydSpeelt.Migrations
 {
     /// <inheritdoc />
-    public partial class updatedseed : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,50 +16,50 @@ namespace ZuydSpeelt.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CategoryName = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Username = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Game",
                 columns: table => new
                 {
-                    GameId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: false),
-                    UploadDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Popularity = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Game", x => x.GameId);
+                    table.PrimaryKey("PK_Game", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Game_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
-                        principalColumn: "CategoryId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -67,27 +67,27 @@ namespace ZuydSpeelt.Migrations
                 name: "Comment",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     GameId = table.Column<int>(type: "integer", nullable: false),
-                    CommentText = table.Column<string>(type: "text", nullable: false),
-                    CommentDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Text = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Comment_Game_GameId",
                         column: x => x.GameId,
                         principalTable: "Game",
-                        principalColumn: "GameId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comment_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -95,26 +95,26 @@ namespace ZuydSpeelt.Migrations
                 name: "Rating",
                 columns: table => new
                 {
-                    RatingId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     GameId = table.Column<int>(type: "integer", nullable: false),
-                    RatingValue = table.Column<int>(type: "integer", nullable: false)
+                    Value = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rating", x => x.RatingId);
+                    table.PrimaryKey("PK_Rating", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Rating_Game_GameId",
                         column: x => x.GameId,
                         principalTable: "Game",
-                        principalColumn: "GameId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Rating_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -124,55 +124,55 @@ namespace ZuydSpeelt.Migrations
                 {
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     GameId = table.Column<int>(type: "integer", nullable: false),
-                    PlayDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Score = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGame", x => new { x.UserId, x.GameId, x.PlayDate });
+                    table.PrimaryKey("PK_UserGame", x => new { x.UserId, x.GameId, x.CreatedAt });
                     table.ForeignKey(
                         name: "FK_UserGame_Game_GameId",
                         column: x => x.GameId,
                         principalTable: "Game",
-                        principalColumn: "GameId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserGame_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Category",
-                columns: new[] { "CategoryId", "CategoryName" },
+                columns: new[] { "Id", "Name" },
                 values: new object[] { 1, "action" });
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "UserId", "Email", "Password", "RegistrationDate", "Username" },
-                values: new object[] { 1, "test@gmail.com", "password", new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), "test" });
+                columns: new[] { "Id", "CreatedAt", "Email", "Password", "Username" },
+                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), "test@gmail.com", "password", "test" });
 
             migrationBuilder.InsertData(
                 table: "Game",
-                columns: new[] { "GameId", "CategoryId", "Popularity", "Title", "UploadDate" },
-                values: new object[] { 1, 1, 0, "TestGame", new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc) });
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "Popularity", "Title" },
+                values: new object[] { 1, 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), 0, "TestGame" });
 
             migrationBuilder.InsertData(
                 table: "Comment",
-                columns: new[] { "CommentId", "CommentDate", "CommentText", "GameId", "UserId" },
-                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Dit is een leuk spel", 1, 1 });
+                columns: new[] { "Id", "CreatedAt", "GameId", "Text", "UserId" },
+                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Dit is een leuk spel", 1 });
 
             migrationBuilder.InsertData(
                 table: "Rating",
-                columns: new[] { "RatingId", "GameId", "RatingValue", "UserId" },
-                values: new object[] { 1, 1, 5, 1 });
+                columns: new[] { "Id", "GameId", "UserId", "Value" },
+                values: new object[] { 1, 1, 1, 5 });
 
             migrationBuilder.InsertData(
                 table: "UserGame",
-                columns: new[] { "GameId", "PlayDate", "UserId", "Score" },
-                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), 1, 5 });
+                columns: new[] { "CreatedAt", "GameId", "UserId", "Score" },
+                values: new object[] { new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), 1, 1, 5 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_GameId",
