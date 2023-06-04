@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ZuydSpeelt.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class updatedseed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -143,6 +143,36 @@ namespace ZuydSpeelt.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "CategoryId", "CategoryName" },
+                values: new object[] { 1, "action" });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "UserId", "Email", "Password", "RegistrationDate", "Username" },
+                values: new object[] { 1, "test@gmail.com", "password", new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), "test" });
+
+            migrationBuilder.InsertData(
+                table: "Game",
+                columns: new[] { "GameId", "CategoryId", "Popularity", "Title", "UploadDate" },
+                values: new object[] { 1, 1, 0, "TestGame", new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc) });
+
+            migrationBuilder.InsertData(
+                table: "Comment",
+                columns: new[] { "CommentId", "CommentDate", "CommentText", "GameId", "UserId" },
+                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Dit is een leuk spel", 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Rating",
+                columns: new[] { "RatingId", "GameId", "RatingValue", "UserId" },
+                values: new object[] { 1, 1, 5, 1 });
+
+            migrationBuilder.InsertData(
+                table: "UserGame",
+                columns: new[] { "GameId", "PlayDate", "UserId", "Score" },
+                values: new object[] { 1, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc), 1, 5 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_GameId",

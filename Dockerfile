@@ -11,7 +11,6 @@ COPY . .
 WORKDIR "/src/ZuydSpeelt"
 
 RUN dotnet build "ZuydSpeelt.csproj" -c Release -o /app/build
-
 FROM build AS publish
 RUN dotnet publish "ZuydSpeelt.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
@@ -19,7 +18,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Copy wait-for-it script and make it executable
 COPY wait-for-it.sh ./
 RUN chmod +x ./wait-for-it.sh
 
