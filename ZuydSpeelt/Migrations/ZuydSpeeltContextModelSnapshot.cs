@@ -24,50 +24,50 @@ namespace ZuydSpeelt.Migrations
 
             modelBuilder.Entity("ZuydSpeelt.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoryId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Category");
 
                     b.HasData(
                         new
                         {
-                            CategoryId = 1,
-                            CategoryName = "action"
+                            Id = 1,
+                            Name = "action"
                         });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CommentId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CommentDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CommentText")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("GameId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
@@ -78,24 +78,27 @@ namespace ZuydSpeelt.Migrations
                     b.HasData(
                         new
                         {
-                            CommentId = 1,
-                            CommentDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CommentText = "Dit is een leuk spel",
+                            Id = 1,
+                            CreatedAt = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             GameId = 1,
+                            Text = "Dit is een leuk spel",
                             UserId = 1
                         });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Game", b =>
                 {
-                    b.Property<int>("GameId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GameId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Popularity")
                         .HasColumnType("integer");
@@ -104,10 +107,7 @@ namespace ZuydSpeelt.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("GameId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -116,32 +116,32 @@ namespace ZuydSpeelt.Migrations
                     b.HasData(
                         new
                         {
-                            GameId = 1,
+                            Id = 1,
                             CategoryId = 1,
+                            CreatedAt = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Popularity = 0,
-                            Title = "TestGame",
-                            UploadDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc)
+                            Title = "TestGame"
                         });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.Rating", b =>
                 {
-                    b.Property<int>("RatingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RatingId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RatingValue")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("RatingId");
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
@@ -152,20 +152,23 @@ namespace ZuydSpeelt.Migrations
                     b.HasData(
                         new
                         {
-                            RatingId = 1,
+                            Id = 1,
                             GameId = 1,
-                            RatingValue = 5,
-                            UserId = 1
+                            UserId = 1,
+                            Value = 5
                         });
                 });
 
             modelBuilder.Entity("ZuydSpeelt.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -175,24 +178,21 @@ namespace ZuydSpeelt.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
 
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            Id = 1,
+                            CreatedAt = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "test@gmail.com",
                             Password = "password",
-                            RegistrationDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Username = "test"
                         });
                 });
@@ -205,13 +205,13 @@ namespace ZuydSpeelt.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("PlayDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Score")
                         .HasColumnType("integer");
 
-                    b.HasKey("UserId", "GameId", "PlayDate");
+                    b.HasKey("UserId", "GameId", "CreatedAt");
 
                     b.HasIndex("GameId");
 
@@ -222,7 +222,7 @@ namespace ZuydSpeelt.Migrations
                         {
                             UserId = 1,
                             GameId = 1,
-                            PlayDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedAt = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Score = 5
                         });
                 });
