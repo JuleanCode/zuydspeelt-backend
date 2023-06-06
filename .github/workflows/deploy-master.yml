@@ -3,6 +3,7 @@ name: Deploy to Azure
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -44,12 +45,11 @@ jobs:
         run: |
           CI_CD_URL=$(az webapp deployment container config --enable-cd true --name zuydspeeltapi --resource-group B2C6B | jq -r '.CI_CD_URL')
           echo "CI_CD_URL=$CI_CD_URL" >> $GITHUB_ENV
-      
+
       - name: Deploy Template
         run: |
           az deployment group create --resource-group B2C6B --template-file template.json --parameters parameters.json
-      
+
       - name: Trigger Azure Deployment
         run: |
           curl -d{} $CI_CD_URL
-        
