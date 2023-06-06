@@ -30,26 +30,26 @@ namespace ZuydSpeelt
             modelBuilder.Entity<User>()
                 .HasData(new User
                 {
-                    UserId = 1,
+                    Id = 1,
                     Username = "test",
                     Password = "password",
                     Email = "test@gmail.com",
-                    RegistrationDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
                 });
 
             modelBuilder.Entity<Category>()
                 .HasData(new Category
                 {
-                    CategoryId = 1,
-                    CategoryName = "action"
+                    Id = 1,
+                    Name = "action"
                 });
 
             modelBuilder.Entity<Game>()
                 .HasData(new Game
                 {
-                    GameId = 1,
+                    Id = 1,
                     Title = "TestGame",
-                    UploadDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
                     Popularity = 0,
                     CategoryId = 1
                 });
@@ -58,27 +58,27 @@ namespace ZuydSpeelt
                 {
                     UserId = 1,
                     GameId = 1,
-                    PlayDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
                     Score = 5
                 });
             modelBuilder.Entity<Comment>()
                 .HasData(new Comment
                 {
-                    CommentId = 1,
+                    Id = 1,
                     UserId = 1,
                     GameId = 1,
-                    CommentText = "Dit is een leuk spel",
-                    CommentDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
+                    Text = "Dit is een leuk spel",
+                    CreatedAt = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
                 });
             modelBuilder.Entity<Rating>()
                 .HasData(new Rating
                 {
-                    RatingId = 1,
+                    Id = 1,
                     UserId = 1,
                     GameId = 1,
-                    RatingValue = 5
+                    Value = 5
                 });
-            modelBuilder.Entity<UserGame>().HasKey(e => new { e.UserId, e.GameId, e.PlayDate });
+            modelBuilder.Entity<UserGame>().HasKey(e => new { e.UserId, e.GameId, e.CreatedAt });
 
             // Ignoring these to prevent double tables in this many to many relationship
             modelBuilder.Entity<User>().Ignore(e => e.Games);

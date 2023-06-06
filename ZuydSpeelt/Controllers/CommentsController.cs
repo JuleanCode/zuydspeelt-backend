@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComment()
         {
-          if (_context.Comment == null)
-          {
-              return NotFound();
-          }
+            if (_context.Comment == null)
+            {
+                return NotFound();
+            }
             return await _context.Comment.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
-          if (_context.Comment == null)
-          {
-              return NotFound();
-          }
+            if (_context.Comment == null)
+            {
+                return NotFound();
+            }
             var comment = await _context.Comment.FindAsync(id);
 
             if (comment == null)
@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComment(int id, Comment comment)
         {
-            if (id != comment.CommentId)
+            if (id != comment.Id)
             {
                 return BadRequest();
             }
@@ -85,14 +85,14 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
-          if (_context.Comment == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.Comment'  is null.");
-          }
+            if (_context.Comment == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.Comment'  is null.");
+            }
             _context.Comment.Add(comment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetComment", new { id = comment.CommentId }, comment);
+            return CreatedAtAction("GetComment", new { id = comment.Id }, comment);
         }
 
         // DELETE: api/Comments/5
@@ -117,7 +117,7 @@ namespace ZuydSpeelt.Controllers
 
         private bool CommentExists(int id)
         {
-            return (_context.Comment?.Any(e => e.CommentId == id)).GetValueOrDefault();
+            return (_context.Comment?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

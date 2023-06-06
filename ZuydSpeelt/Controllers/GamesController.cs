@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
-          if (_context.Game == null)
-          {
-              return NotFound();
-          }
+            if (_context.Game == null)
+            {
+                return NotFound();
+            }
             return await _context.Game.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(int id)
         {
-          if (_context.Game == null)
-          {
-              return NotFound();
-          }
+            if (_context.Game == null)
+            {
+                return NotFound();
+            }
             var game = await _context.Game.FindAsync(id);
 
             if (game == null)
@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGame(int id, Game game)
         {
-            if (id != game.GameId)
+            if (id != game.Id)
             {
                 return BadRequest();
             }
@@ -85,14 +85,14 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
-          if (_context.Game == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.Game'  is null.");
-          }
+            if (_context.Game == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.Game'  is null.");
+            }
             _context.Game.Add(game);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGame", new { id = game.GameId }, game);
+            return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
 
         // DELETE: api/Games/5
@@ -117,7 +117,7 @@ namespace ZuydSpeelt.Controllers
 
         private bool GameExists(int id)
         {
-            return (_context.Game?.Any(e => e.GameId == id)).GetValueOrDefault();
+            return (_context.Game?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
