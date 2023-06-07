@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Bogus;
 using System;
 
 namespace ZuydSpeelt
@@ -27,62 +28,87 @@ namespace ZuydSpeelt
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasData(new User
-                {
-                    UserId = 1,
-                    Username = "test",
-                    Password = "password",
-                    Email = "test@gmail.com",
-                    RegistrationDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
-                });
+            Fakedata.Init(10);
 
-            modelBuilder.Entity<Category>()
-                .HasData(new Category
-                {
-                    CategoryId = 1,
-                    CategoryName = "action"
-                });
-
-            modelBuilder.Entity<Game>()
-                .HasData(new Game
-                {
-                    GameId = 1,
-                    Title = "TestGame",
-                    UploadDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
-                    Popularity = 0,
-                    CategoryId = 1
-                });
-            modelBuilder.Entity<UserGame>()
-                .HasData(new UserGame
-                {
-                    UserId = 1,
-                    GameId = 1,
-                    PlayDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc),
-                    Score = 5
-                });
-            modelBuilder.Entity<Comment>()
-                .HasData(new Comment
-                {
-                    CommentId = 1,
-                    UserId = 1,
-                    GameId = 1,
-                    CommentText = "Dit is een leuk spel",
-                    CommentDate = new DateTime(2023, 02, 02, 0, 0, 0, DateTimeKind.Utc)
-                });
-            modelBuilder.Entity<Rating>()
-                .HasData(new Rating
-                {
-                    RatingId = 1,
-                    UserId = 1,
-                    GameId = 1,
-                    RatingValue = 5
-                });
+            modelBuilder.Entity<User>().HasData(Fakedata.Users);
+            modelBuilder.Entity<Category>().HasData(Fakedata.Categories);
+            modelBuilder.Entity<Game>().HasData(Fakedata.Games);
+            modelBuilder.Entity<UserGame>().HasData(Fakedata.UserGames);
+            modelBuilder.Entity<Comment>().HasData(Fakedata.Comments);
+            modelBuilder.Entity<Rating>().HasData(Fakedata.Ratings);
             modelBuilder.Entity<UserGame>().HasKey(e => new { e.UserId, e.GameId, e.PlayDate });
 
             // Ignoring these to prevent double tables in this many to many relationship
             modelBuilder.Entity<User>().Ignore(e => e.Games);
             modelBuilder.Entity<Game>().Ignore(e => e.Users);
+            
+        }
+
+        public static class Fakedata
+        {
+            public static List<User> Users = new List<User>();
+            public static List<Category> Categories = new List<Category>();
+            public static List<Game> Games = new List<Game>();
+            public static List<UserGame> UserGames = new List<UserGame>();
+            public static List<Comment> Comments = new List<Comment>();
+            public static List<Rating> Ratings = new List<Rating>();
+
+            public static void Init(int count)
+            {
+                var UserId = 1;
+                var userFaker = new Faker<User>()
+                    .RuleFor(u => u.UserId, _ => UserId++)
+                    .RuleFor(u => u.Username, f => f.Name.FirstName())
+                    .RuleFor(u => u.Password, f => f.Hacker.Verb())
+                    .RuleFor(u => u.Email, f => f.Internet.Email())
+                    .RuleFor(u => u.RegistrationDate, f => f.Date.Recent());
+                
+                var CategoryId = 1;
+                var categoryFaker = new Faker<Category>()
+                    .RuleFor(c => c.CategoryId, _ => CategoryId++)
+                    .RuleFor(c => c.CategoryName, f => f.Hacker.Verb());
+
+                var GameId = 1;
+                var gameFaker = new Faker<Game>()
+                    .RuleFor(g => g.GameId, _ => GameId++)
+                    .RuleFor(g => g.Title, f => f.Hacker.Phrase())
+                    .RuleFor(g=> g.UploadDate, f => f.Date.Recent())
+                    .RuleFor(g => g.Popularity, f => f.Random.Number(1, 5));
+                
+                var userGameFaker = new Faker<UserGame>()
+                    .RuleFor(u => u.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(u => u.GameId, f => f.Random.Number(1, Games.Count))
+                    .RuleFor(u => u.PlayDate, f => f.Date.Recent())
+                    .RuleFor(u=> u.Score, f => f.Random.Number(1,10));
+
+                var CommentId = 1;
+                var commentFaker = new Faker<Comment>()
+                    .RuleFor(c => c.CommentId, _ => CommentId++)
+                    .RuleFor(c => c.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(c => c.GameId, f => f.Random.Number(1, Games.Count))
+                    .RuleFor(c => c.CommentText, f => f.Hacker.Phrase())
+                    .RuleFor(c => c.CommentDate, f => f.Date.Recent());
+                
+                var ratingId = 1;
+                var ratingFaker = new Faker<Rating>()
+                    .RuleFor(r => r.RatingId, _ => ratingId++)
+                    .RuleFor(r => r.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(r => r.GameId, f => f.Random.Number(1, Games.Count))
+                    .RuleFor(r => r.RatingValue, f => f.Random.Number(1, 5));
+                
+                var users = userFaker.Generate(count);
+                Fakedata.Users.AddRange(users);
+                var categories = categoryFaker.Generate(count);
+                Fakedata.Categories.AddRange(categories);
+                var games = gameFaker.Generate(count);
+                Fakedata.Games.AddRange(games);
+                var userGames = userGameFaker.Generate(count);
+                Fakedata.UserGames.AddRange(userGames);
+                var comments = commentFaker.Generate(count);
+                Fakedata.Comments.AddRange(comments);
+                var ratings = ratingFaker.Generate(count);
+                Fakedata.Ratings.AddRange(ratings);
+            }
         }
     }
 }
