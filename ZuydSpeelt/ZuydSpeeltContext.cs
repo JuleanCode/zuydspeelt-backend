@@ -52,25 +52,24 @@ namespace ZuydSpeelt
             public static List<UserGame> UserGames = new List<UserGame>();
             public static List<Comment> Comments = new List<Comment>();
             public static List<Rating> Ratings = new List<Rating>();
+            public static int RecordId { get; set; } = 1;
+
 
             public static void Init(int count)
             {
-                var UserId = 1;
                 var userFaker = new Faker<User>()
-                    .RuleFor(u => u.Id, _ => UserId++)
+                    .RuleFor(u => u.Id, _ => RecordId++)
                     .RuleFor(u => u.Username, f => f.Name.FirstName())
                     .RuleFor(u => u.Password, f => f.Hacker.Verb())
                     .RuleFor(u => u.Email, f => f.Internet.Email())
                     .RuleFor(u => u.CreatedAt, f => f.Date.Recent());
 
-                var CategoryId = 1;
                 var categoryFaker = new Faker<Category>()
-                    .RuleFor(c => c.Id, _ => CategoryId++)
+                    .RuleFor(c => c.Id, _ => RecordId++)
                     .RuleFor(c => c.Name, f => f.Hacker.Verb());
 
-                var GameId = 1;
                 var gameFaker = new Faker<Game>()
-                    .RuleFor(g => g.Id, _ => GameId++)
+                    .RuleFor(g => g.Id, _ => RecordId++)
                     .RuleFor(g => g.Title, f => f.Hacker.Phrase())
                     .RuleFor(g => g.CreatedAt, f => f.Date.Recent())
                     .RuleFor(g => g.Popularity, f => f.Random.Number(1, 5));
@@ -81,17 +80,15 @@ namespace ZuydSpeelt
                     .RuleFor(u => u.CreatedAt, f => f.Date.Recent())
                     .RuleFor(u => u.Score, f => f.Random.Number(1, 10));
 
-                var CommentId = 1;
                 var commentFaker = new Faker<Comment>()
-                    .RuleFor(c => c.Id, _ => CommentId++)
+                    .RuleFor(c => c.Id, _ => RecordId++)
                     .RuleFor(c => c.UserId, f => f.Random.Number(1, Users.Count))
                     .RuleFor(c => c.GameId, f => f.Random.Number(1, Games.Count))
                     .RuleFor(c => c.Text, f => f.Hacker.Phrase())
                     .RuleFor(c => c.CreatedAt, f => f.Date.Recent());
 
-                var ratingId = 1;
                 var ratingFaker = new Faker<Rating>()
-                    .RuleFor(r => r.Id, _ => ratingId++)
+                    .RuleFor(r => r.Id, _ => RecordId++)
                     .RuleFor(r => r.UserId, f => f.Random.Number(1, Users.Count))
                     .RuleFor(r => r.GameId, f => f.Random.Number(1, Games.Count))
                     .RuleFor(r => r.Value, f => f.Random.Number(1, 5));
