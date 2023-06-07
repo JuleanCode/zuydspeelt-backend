@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "subscriptionId": {
+      "value": "8d9ee96d-4dfb-422e-880b-151705e0d558"
+    },
+    "name": {
+      "value": "zuydspeeltapi-dev"
+    },
+    "location": {
+      "value": "West Europe"
+    },
+    "hostingPlanName": {
+      "value": "zuydspeelt-backend-asp"
+    },
+    "serverFarmResourceGroup": {
+      "value": "B2C6B"
+    },
+    "alwaysOn": {
+      "value": false
+    },
+    "ftpsState": {
+      "value": "FtpsOnly"
+    },
+    "linuxFxVersion": {
+      "value": "DOCKER|drtuup/zuydspeelt-web-api-dev"
+    },
+    "dockerRegistryUrl": {
+      "value": "https://index.docker.io"
+    },
+    "dockerRegistryUsername": {
+      "value": ""
+    },
+    "dockerRegistryPassword": {
+      "value": ""
+    },
+    "dockerRegistryStartupCommand": {
+      "value": ""
+    }
+  }
+}

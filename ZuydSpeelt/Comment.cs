@@ -7,15 +7,15 @@ namespace ZuydSpeelt
     {
         // Properties
         [Key]
-        public int CommentId { get; set; }
+        public int Id { get; set; }
         [Required, ForeignKey("User")]
         public int UserId { get; set; }
         [Required, ForeignKey("Game")]
         public int GameId { get; set; }
         [Required, DataType(DataType.Text)]
-        public string CommentText { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
         [Required, DataType(DataType.Date)]
-        public DateTime CommentDate { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         // Relationships
         public User User { get; set; } = null!;

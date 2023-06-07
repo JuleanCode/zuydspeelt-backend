@@ -6,9 +6,9 @@ namespace ZuydSpeelt
     {
         // Properties
         [Key]
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
         [Required, DataType(DataType.Text)]
-        public string CategoryName { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
         // Relationships
         public List<Game> Games { get; } = new();
