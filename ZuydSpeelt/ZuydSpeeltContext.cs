@@ -12,6 +12,7 @@ namespace ZuydSpeelt
         public ZuydSpeeltContext(IConfiguration configuration)
         {
             Configuration = configuration;
+            Fakedata.Init(100);
         }
 
         public DbSet<Category> Category { get; set; } = null!;
@@ -28,8 +29,6 @@ namespace ZuydSpeelt
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Fakedata.Init(10);
-
             modelBuilder.Entity<User>().HasData(Fakedata.Users);
             modelBuilder.Entity<Category>().HasData(Fakedata.Categories);
             modelBuilder.Entity<Game>().HasData(Fakedata.Games);
@@ -75,28 +74,28 @@ namespace ZuydSpeelt
 
                 var gameFaker = new Faker<Game>()
                     .RuleFor(g => g.Id, _ => GameId++)
-                    .RuleFor(g => g.CategoryId, f => f.Random.Number(1, 5))
+                    .RuleFor(g => g.CategoryId, f => f.Random.Number(1, Categories.Count))
                     .RuleFor(g => g.Title, f => f.Hacker.Phrase())
                     .RuleFor(g => g.CreatedAt, f => f.Date.Recent().ToUniversalTime())
-                    .RuleFor(g => g.Popularity, f => f.Random.Number(1, 5));
+                    .RuleFor(g => g.Popularity, f => f.Random.Number(1, 100));
 
                 var userGameFaker = new Faker<UserGame>()
-                    .RuleFor(u => u.UserId, f => f.Random.Number(1, 5))
-                    .RuleFor(u => u.GameId, f => f.Random.Number(1, 5))
+                    .RuleFor(u => u.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(u => u.GameId, f => f.Random.Number(1, Games.Count))
                     .RuleFor(u => u.CreatedAt, f => f.Date.Recent().ToUniversalTime())
                     .RuleFor(u => u.Score, f => f.Random.Number(1, 10));
 
                 var commentFaker = new Faker<Comment>()
                     .RuleFor(c => c.Id, _ => CommentId++)
-                    .RuleFor(c => c.UserId, f => f.Random.Number(1, 5))
-                    .RuleFor(c => c.GameId, f => f.Random.Number(1, 5))
+                    .RuleFor(c => c.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(c => c.GameId, f => f.Random.Number(1, Games.Count))
                     .RuleFor(c => c.Text, f => f.Hacker.Phrase())
                     .RuleFor(c => c.CreatedAt, f => f.Date.Recent().ToUniversalTime());
 
                 var ratingFaker = new Faker<Rating>()
                     .RuleFor(r => r.Id, _ => RatingId++)
-                    .RuleFor(r => r.UserId, f => f.Random.Number(1, 5))
-                    .RuleFor(r => r.GameId, f => f.Random.Number(1, 5))
+                    .RuleFor(r => r.UserId, f => f.Random.Number(1, Users.Count))
+                    .RuleFor(r => r.GameId, f => f.Random.Number(1, Games.Count))
                     .RuleFor(r => r.Value, f => f.Random.Number(1, 5));
 
                 var users = userFaker.Generate(count);
