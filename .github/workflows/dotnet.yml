@@ -22,3 +22,13 @@ jobs:
       run: dotnet build
     - name: Test
       run: dotnet test
+
+    - name: Success Notification
+      if: ${{ success() }}
+      uses: mikesprague/teams-incoming-webhook-action@v1
+      with:
+        github-token: ${{ github.token }}
+        webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+        deploy-card: true
+        title: 'Deployment Successful'
+        color: 'success'
