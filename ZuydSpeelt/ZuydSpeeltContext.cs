@@ -29,9 +29,14 @@ namespace ZuydSpeelt
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            List<Game> gamesByCategory = new List<Game>();
+            List<Game> GamesByRatingAsc = new List<Game>();
+            List<Game> GamesByRatingDesc = new List<Game>();
+
+            
             modelBuilder.Entity<User>().HasData(Fakedata.Users);
             modelBuilder.Entity<Category>().HasData(Fakedata.Categories);
-            modelBuilder.Entity<Game>().HasData(Fakedata.Games);
+            modelBuilder.Entity<Game>().HasData(GamesByRatingDesc);
             modelBuilder.Entity<UserGame>().HasData(Fakedata.UserGames);
             modelBuilder.Entity<Comment>().HasData(Fakedata.Comments);
             modelBuilder.Entity<Rating>().HasData(Fakedata.Ratings);
@@ -40,6 +45,30 @@ namespace ZuydSpeelt
             // Ignoring these to prevent double tables in this many to many relationship
             modelBuilder.Entity<User>().Ignore(e => e.Games);
             modelBuilder.Entity<Game>().Ignore(e => e.Users);
+
+            //Adding sorting functions by xyz
+            //Games by category
+            var context = new ZuydSpeeltContext(Configuration);
+
+            // List<Game> gamesByCategory = new List<Game>();
+            // List<Game> GamesByRatingAsc = new List<Game>();
+            // List<Game> GamesByRatingDesc = new List<Game>();
+
+            var selectedCategoryName = string.Empty;
+            var selectedCategory = context.Category.FirstOrDefault(u => u.Name == selectedCategoryName)!;
+
+            var getGames = context.Game.Where(u => u.CategoryId == selectedCategory.Id);
+            gamesByCategory.AddRange(getGames);
+
+            //Games per by rating
+            //Ascending (Low -> high)
+
+            var gamesByRatingAsc = context.Game.OrderBy(u => u.Popularity);
+            GamesByRatingAsc.AddRange(gamesByRatingAsc);
+
+            //Descending (High -> Low)
+            var gamesByRatingDesc = context.Game.OrderByDescending( u => u.Popularity);
+            GamesByRatingDesc.AddRange(gamesByRatingDesc);
 
         }
 
