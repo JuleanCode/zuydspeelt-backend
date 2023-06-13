@@ -26,9 +26,9 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new()
     {
-        ValidIssuer = "https://b2c6b-frontend-dev.azurewebsites.net/",
-        ValidAudience = "https://b2c6b-frontend-dev.azurewebsites.net",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FFE1umUGUW1SaReshHGYlg==")),
+        ValidIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER"),
+        ValidAudience = "/login",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Utils.GenerateBase64())),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,
