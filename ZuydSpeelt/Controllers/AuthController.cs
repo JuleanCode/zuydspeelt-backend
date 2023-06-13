@@ -54,11 +54,11 @@ namespace ZuydSpeelt.Controllers
             // check if a username and password were actually sent
             if (payload.Email == string.Empty || payload.Password == string.Empty)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest(new { errorMessage = "Invalid client request" });
             }
 
             // check if the user exists in the database
-            var user = _context.User.First(u => u.Email == payload.Email && u.Password == payload.Password);
+            var user = _context.User.FirstOrDefault(u => u.Email == payload.Email && u.Password == payload.Password);
 
             // if the user exists, generate an access token for the user
             if (user != null)
@@ -66,7 +66,7 @@ namespace ZuydSpeelt.Controllers
                 return Ok(GenerateToken(user));
             }
 
-            return Unauthorized();
+            return Unauthorized(new { errorMessage = "User not found" });
         }
 
         private ReturnPayload GenerateToken(User user)

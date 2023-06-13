@@ -34,7 +34,9 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/zuydspeelt-web-api-dev:latest
-          build-args: ZUYDSPEELT_CONNECTIONSTRING=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING_DEV }}
+          build-args: |
+            ZUYDSPEELT_CONNECTIONSTRING=${{ secrets.ZUYDSPEELT_CONNECTIONSTRING_DEV }}
+            ENVIRONMENT=DEVELOPMENT
 
       - name: Login to Azure
         run: |

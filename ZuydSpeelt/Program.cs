@@ -17,6 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZuydSpeeltContext>();
+
+string? environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+string validIssuer = builder.Configuration.GetSection("ValidIssuer").Get<Dictionary<string, string>>()[environment ?? "LOCAL"];
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -26,7 +30,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new()
     {
-        ValidIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER"),
+        ValidIssuer = validIssuer,
         ValidAudience = "/login",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Utils.GenerateBase64())),
         ValidateIssuer = true,
@@ -67,7 +71,6 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
     var context = services.GetRequiredService<ZuydSpeeltContext>();
     if (context.Database.GetPendingMigrations().Any())
     {
