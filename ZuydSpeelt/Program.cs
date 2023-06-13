@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ZuydSpeelt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZuydSpeeltContext>();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new()
+    {
+        ValidIssuer = "https://b2c6b-frontend-dev.azurewebsites.net/",
+        ValidAudience = "https://b2c6b-frontend-dev.azurewebsites.net",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FFE1umUGUW1SaReshHGYlg==")),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+builder.Services.AddAuthorization();
 
 // CORS configuration
 builder.Services.AddCors(options =>
@@ -36,8 +58,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 // Enable CORS
 app.UseCors("AllowOrigin");
 
@@ -53,5 +73,9 @@ using (var scope = app.Services.CreateScope())
         context.Database.Migrate();
     }
 }
+
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
