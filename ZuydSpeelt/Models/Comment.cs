@@ -15,7 +15,7 @@ namespace ZuydSpeelt.Models
         [Required, DataType(DataType.Text)]
         public string Text { get; set; } = string.Empty;
         [Required, DataType(DataType.Date)]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
 
         // Relationships
         public User User { get; set; } = null!;
