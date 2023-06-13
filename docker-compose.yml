@@ -17,5 +17,6 @@ services:
       - "${API_PORT}:${API_DOCKER_PORT}"
     environment:
       ZUYDSPEELT_CONNECTIONSTRING: User ID=${DB_USER};Password=${DB_PASSWORD};Host=${DB_HOST};Port=${DB_PORT};Database=${DB_NAME};
+      ENVIRONMENT: LOCAL_DOCKER
     depends_on:
       - db

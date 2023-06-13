@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Bogus;
 using System;
+using ZuydSpeelt.Models;
 
 namespace ZuydSpeelt
 {
@@ -24,7 +25,16 @@ namespace ZuydSpeelt
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("ZUYDSPEELT_CONNECTIONSTRING"));
+            string? envConnectionString = Environment.GetEnvironmentVariable("ZUYDSPEELT_CONNECTIONSTRING");
+
+            if (envConnectionString != null)
+            {
+                optionsBuilder.UseNpgsql(envConnectionString);
+            }
+            else
+            {
+                optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

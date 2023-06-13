@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZuydSpeelt
+namespace ZuydSpeelt.Models
 {
     public class UserGame
     {
@@ -9,7 +9,7 @@ namespace ZuydSpeelt
         public int UserId { get; set; }
         [ForeignKey("Game")]
         public int GameId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
         public int Score { get; set; }
 
         // Relationships
