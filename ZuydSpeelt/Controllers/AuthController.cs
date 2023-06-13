@@ -69,6 +69,20 @@ namespace ZuydSpeelt.Controllers
             return Unauthorized();
         }
 
+        [HttpPost("register")]
+        public IActionResult Register(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.User.Add(user);
+                _context.SaveChangesAsync();
+
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         private ReturnPayload GenerateToken(User user)
         {
             var issuer = HttpContext.Request.Host.Value;

@@ -9,7 +9,7 @@ namespace ZuydSpeelt.Models
         public int UserId { get; set; }
         [ForeignKey("Game")]
         public int GameId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
         public int Score { get; set; }
 
         // Relationships
