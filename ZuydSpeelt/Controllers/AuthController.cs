@@ -87,7 +87,7 @@ namespace ZuydSpeelt.Controllers
         {
             var issuer = HttpContext.Request.Host.Value;
             var audience = HttpContext.Request.Path;
-            var key = Encoding.ASCII.GetBytes(Utils.GenerateBase64());
+            var key = Encoding.ASCII.GetBytes(JWTKey.Instance.GetKey());
             var expiresAt = DateTime.Now.AddHours(24);
 
             var tokenDescriptor = new SecurityTokenDescriptor

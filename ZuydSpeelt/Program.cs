@@ -32,7 +32,7 @@ builder.Services.AddAuthentication(options =>
     {
         ValidIssuer = validIssuer,
         ValidAudience = "/login",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Utils.GenerateBase64())),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTKey.Instance.GetKey())),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,
