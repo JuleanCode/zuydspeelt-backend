@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZuydSpeelt;
+using ZuydSpeelt.Models;
 
 namespace ZuydSpeelt.Controllers
 {

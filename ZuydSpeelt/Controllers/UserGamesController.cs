@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZuydSpeelt;
+using ZuydSpeelt.Models;
 
 namespace ZuydSpeelt.Controllers
 {
@@ -24,10 +24,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserGame>>> GetUserGame()
         {
-          if (_context.UserGame == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserGame == null)
+            {
+                return NotFound();
+            }
             return await _context.UserGame.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace ZuydSpeelt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserGame>> GetUserGame(int id)
         {
-          if (_context.UserGame == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserGame == null)
+            {
+                return NotFound();
+            }
             var userGame = await _context.UserGame.FindAsync(id);
 
             if (userGame == null)
@@ -85,10 +85,10 @@ namespace ZuydSpeelt.Controllers
         [HttpPost]
         public async Task<ActionResult<UserGame>> PostUserGame(UserGame userGame)
         {
-          if (_context.UserGame == null)
-          {
-              return Problem("Entity set 'ZuydSpeeltContext.UserGame'  is null.");
-          }
+            if (_context.UserGame == null)
+            {
+                return Problem("Entity set 'ZuydSpeeltContext.UserGame'  is null.");
+            }
             _context.UserGame.Add(userGame);
             try
             {

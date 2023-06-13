@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Bogus;
 using System;
+using ZuydSpeelt.Models;
 
 namespace ZuydSpeelt
 {

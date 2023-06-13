@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using ZuydSpeelt;
+using ZuydSpeelt.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ZuydSpeelt;
 
 var builder = WebApplication.CreateBuilder(args);
 

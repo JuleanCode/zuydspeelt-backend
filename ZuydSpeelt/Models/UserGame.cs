@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZuydSpeelt
+namespace ZuydSpeelt.Models
 {
     public class UserGame
     {

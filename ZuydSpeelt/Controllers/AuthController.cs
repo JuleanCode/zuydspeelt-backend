@@ -12,8 +12,8 @@ namespace ZuydSpeelt.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var issuer = "backendwebsite.com";
-            var audience = "backendwebsite.com";
+            var issuer = "https://b2c6b-frontend-dev.azurewebsites.net/";
+            var audience = "https://b2c6b-frontend-dev.azurewebsites.net/";
             var key = Encoding.ASCII.GetBytes("FFE1umUGUW1SaReshHGYlg==");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
