@@ -54,7 +54,7 @@ namespace ZuydSpeelt.Controllers
             // check if a username and password were actually sent
             if (payload.Email == string.Empty || payload.Password == string.Empty)
             {
-                return BadRequest(new { errorMessage = "Invalid client request" });
+                return BadRequest(new { message = "Invalid login request" });
             }
 
             // check if the user exists in the database
@@ -66,7 +66,7 @@ namespace ZuydSpeelt.Controllers
                 return Ok(GenerateToken(user));
             }
 
-            return Unauthorized(new { errorMessage = "User not found" });
+            return Unauthorized(new { message = "User not found" });
         }
 
         [HttpPost("register")]
@@ -77,10 +77,10 @@ namespace ZuydSpeelt.Controllers
                 _context.User.Add(user);
                 _context.SaveChangesAsync();
 
-                return Ok();
+                return Ok(new { message = "User created successfully" });
             }
 
-            return BadRequest();
+            return BadRequest(new { message = "Invalid model state" });
         }
 
         private ReturnPayload GenerateToken(User user)
