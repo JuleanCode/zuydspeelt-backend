@@ -38,11 +38,14 @@ jobs:
         uses: anchore/scan-action@v3
         with:
           image: "localbuild/testimage:latest"
+          output-format: table
 
       - name: Scan current project
         uses: anchore/scan-action@v3
         with:
           path: "."
+          output-format: table
+
 
       - name: Success Notification
         if: ${{ success() }}
