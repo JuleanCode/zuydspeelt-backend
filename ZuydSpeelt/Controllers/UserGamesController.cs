@@ -12,6 +12,7 @@ namespace ZuydSpeelt.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserGamesController : ControllerBase
     {
         private readonly ZuydSpeeltContext _context;
