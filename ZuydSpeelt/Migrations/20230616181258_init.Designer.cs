@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZuydSpeelt;
@@ -11,9 +12,11 @@ using ZuydSpeelt;
 namespace ZuydSpeelt.Migrations
 {
     [DbContext(typeof(ZuydSpeeltContext))]
-    partial class ZuydSpeeltContextModelSnapshot : ModelSnapshot
+    [Migration("20230616181258_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
