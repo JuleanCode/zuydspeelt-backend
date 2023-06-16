@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ZuydSpeelt;
+using ZuydSpeelt.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +76,10 @@ using (var scope = app.Services.CreateScope())
     if (context.Database.GetPendingMigrations().Any())
     {
         context.Database.Migrate();
+        if (Environment.GetEnvironmentVariable("ENVIRONMENT") != "PRODUCTION")
+        {
+            DataSeeder.Seed(context);
+        }
     }
 }
 
