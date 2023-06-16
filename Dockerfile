@@ -3,7 +3,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0.313 AS build
 WORKDIR /src
 COPY ["ZuydSpeelt/ZuydSpeelt.csproj", "ZuydSpeelt/"]
 RUN dotnet restore "ZuydSpeelt/ZuydSpeelt.csproj"
