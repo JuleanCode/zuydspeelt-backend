@@ -4,6 +4,8 @@ services:
   db:
     container_name: postgres
     image: postgres
+    volumes:
+      - ./.postgresdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ZuydSpeelt.Models
 {
@@ -19,7 +20,7 @@ namespace ZuydSpeelt.Models
         // Relationships
         public List<Comment> Comments { get; } = new();
         public List<Rating> Ratings { get; } = new();
-        public List<Game> Games { get; } = new(); // Ignored in OnModelCreating to prevent double many to many tables
+        [JsonIgnore]
         public List<UserGame> UserGames { get; } = new();
     }
 }

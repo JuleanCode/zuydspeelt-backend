@@ -368,3 +368,6 @@ FodyWeavers.xsd
 # Visual Studio Code Workspace Settings
 .vscode/
 .DS_Store
+
+# Ignore database data
+.postgresdata/
