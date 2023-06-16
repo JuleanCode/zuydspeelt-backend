@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZuydSpeeltContext>();
 
 string? environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
-string validIssuer = builder.Configuration.GetSection("ValidIssuer").Get<Dictionary<string, string>>()[environment ?? "LOCAL"];
+string? validIssuer = builder.Configuration.GetSection("ValidIssuer").Get<Dictionary<string, string>>()?[environment ?? "LOCAL"];
 
 builder.Services.AddAuthentication(options =>
 {
