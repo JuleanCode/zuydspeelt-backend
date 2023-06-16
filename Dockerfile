@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0.16-focal-amd64 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.7-jammy-amd64 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0.304-jammy-amd64 AS build
 WORKDIR /src
 COPY ["ZuydSpeelt/ZuydSpeelt.csproj", "ZuydSpeelt/"]
 RUN dotnet restore "ZuydSpeelt/ZuydSpeelt.csproj"

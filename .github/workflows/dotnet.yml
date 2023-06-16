@@ -38,8 +38,41 @@ jobs:
         uses: anchore/scan-action@v3
         with:
           image: "localbuild/testimage:latest"
+          output-format: table
 
       - name: Scan current project
         uses: anchore/scan-action@v3
         with:
           path: "."
+          output-format: table
+
+
+      - name: Success Notification
+        if: ${{ success() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+            github-token: ${{ github.token }}
+            webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+            deploy-card: true
+            title: 'Deployment Successful'
+            color: 'success'
+        
+      - name: Failure Notification
+        if: ${{ failure() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+            github-token: ${{ github.token }}
+            webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+            deploy-card: true
+            title: 'Deployment Failed'
+            color: 'failure'
+    
+      - name: Cancelled Notification
+        if: ${{ cancelled() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+            github-token: ${{ github.token }}
+            webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+            deploy-card: true
+            title: 'Deployment Cancelled'
+            color: 'warning'
