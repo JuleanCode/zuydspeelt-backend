@@ -12,7 +12,6 @@ namespace ZuydSpeelt.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserGamesController : ControllerBase
     {
         private readonly ZuydSpeeltContext _context;
@@ -30,18 +29,36 @@ namespace ZuydSpeelt.Controllers
             {
                 return NotFound();
             }
-            return await _context.UserGame.ToListAsync();
+            return await _context.UserGame.Include(ug => ug.Game).Include(ug => ug.User).ToListAsync();
         }
 
-        // GET: api/UserGames/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserGame>> GetUserGame(int id)
+        // GET: api/UserGames/user/5
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<UserGame>> GetUserGameByUser(int id)
         {
             if (_context.UserGame == null)
             {
                 return NotFound();
             }
-            var userGame = await _context.UserGame.FindAsync(id);
+            var userGame = await _context.UserGame.Where(ug => ug.UserId == id).Include(ug => ug.Game).Include(ug => ug.User).FirstOrDefaultAsync();
+
+            if (userGame == null)
+            {
+                return NotFound();
+            }
+
+            return userGame;
+        }
+
+        // GET: api/UserGames/game/5
+        [HttpGet("game/{id}")]
+        public async Task<ActionResult<UserGame>> GetUserGameByGame(int id)
+        {
+            if (_context.UserGame == null)
+            {
+                return NotFound();
+            }
+            var userGame = await _context.UserGame.Where(ug => ug.GameId == id).Include(ug => ug.Game).Include(ug => ug.User).FirstOrDefaultAsync();
 
             if (userGame == null)
             {

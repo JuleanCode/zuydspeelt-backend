@@ -47,10 +47,6 @@ namespace ZuydSpeelt
             modelBuilder.Entity<Rating>().HasData(Fakedata.Ratings);
             modelBuilder.Entity<UserGame>().HasKey(e => new { e.UserId, e.GameId, e.CreatedAt });
 
-            // Ignoring these to prevent double tables in this many to many relationship
-            modelBuilder.Entity<User>().Ignore(e => e.Games);
-            modelBuilder.Entity<Game>().Ignore(e => e.Users);
-
         }
 
         public static class Fakedata
