@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZuydSpeelt
+namespace ZuydSpeelt.Models
 {
     public class Game
     {
@@ -11,7 +11,7 @@ namespace ZuydSpeelt
         [Required, DataType(DataType.Text)]
         public string Title { get; set; } = null!;
         [Required, DataType(DataType.DateTime)]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
         [Required]
         public int Popularity { get; set; } = 0; // Starts default at 0
         [Required, ForeignKey("Category")]

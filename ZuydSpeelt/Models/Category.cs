@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ZuydSpeelt
+namespace ZuydSpeelt.Models
 {
     public class Category
     {
