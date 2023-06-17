@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ZuydSpeelt.Models
@@ -6,7 +7,7 @@ namespace ZuydSpeelt.Models
     public class User
     {
         // Properties
-        [Key, Required]
+        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required, DataType(DataType.Text)]
         public string Username { get; set; } = null!;
