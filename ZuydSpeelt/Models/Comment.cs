@@ -6,7 +6,7 @@ namespace ZuydSpeelt.Models
     public class Comment
     {
         // Properties
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required, ForeignKey("User")]
         public int UserId { get; set; }

@@ -91,6 +91,8 @@ namespace ZuydSpeelt.Controllers
             {
                 return Problem("Entity set 'ZuydSpeeltContext.Comment'  is null.");
             }
+            var commentId = _context.Comment.Max(c => c.Id) + 1;
+            comment.Id = commentId;
             _context.Comment.Add(comment);
             await _context.SaveChangesAsync();
 

@@ -91,6 +91,8 @@ namespace ZuydSpeelt.Controllers
             {
                 return Problem("Entity set 'ZuydSpeeltContext.Category'  is null.");
             }
+            var categoryid = _context.Category.Max(c => c.Id) + 1;
+            category.Id = categoryid;
             _context.Category.Add(category);
             await _context.SaveChangesAsync();
 

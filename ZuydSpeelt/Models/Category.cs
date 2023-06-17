@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZuydSpeelt.Models
 {
     public class Category
     {
         // Properties
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required, DataType(DataType.Text)]
         public string Name { get; set; } = null!;

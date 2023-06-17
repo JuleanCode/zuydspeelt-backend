@@ -70,12 +70,14 @@ namespace ZuydSpeelt.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public async Task<ActionResult> Register(User user)
         {
             if (ModelState.IsValid)
             {
+                var userid = _context.User.Max(u => u.Id) + 1;
+                user.Id = userid;
                 _context.User.Add(user);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 return Ok(new { message = "User created successfully" });
             }
