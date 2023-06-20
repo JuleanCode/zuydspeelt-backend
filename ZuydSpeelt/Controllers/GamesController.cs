@@ -24,6 +24,7 @@ namespace ZuydSpeelt.Controllers
 
         // GET: api/Games
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
             if (_context.Game == null)
