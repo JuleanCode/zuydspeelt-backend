@@ -58,6 +58,7 @@ namespace ZuydSpeelt.Controllers
                 .Include(ug => ug.Game)
                 .Include(ug => ug.User)
                 .OrderByDescending(ug => ug.Score)
+                .Take(25)
                 .ToListAsync();
 
             if (userGame == null)
