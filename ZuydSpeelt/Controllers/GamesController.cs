@@ -24,6 +24,7 @@ namespace ZuydSpeelt.Controllers
 
         // GET: api/Games
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
             if (_context.Game == null)
@@ -91,6 +92,8 @@ namespace ZuydSpeelt.Controllers
             {
                 return Problem("Entity set 'ZuydSpeeltContext.Game'  is null.");
             }
+            var gameid = _context.Game.Max(g => g.Id) + 1;
+            game.Id = gameid;
             _context.Game.Add(game);
             await _context.SaveChangesAsync();
 

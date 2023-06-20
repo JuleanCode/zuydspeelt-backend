@@ -7,7 +7,7 @@ namespace ZuydSpeelt.Models
     public class Game
     {
         // Properties
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required, DataType(DataType.Text)]
         public string Title { get; set; } = null!;

@@ -30,7 +30,12 @@ namespace ZuydSpeelt.Controllers
             {
                 return NotFound();
             }
-            var userGame = await _context.UserGame.Where(ug => ug.UserId == id).Include(ug => ug.Game).Include(ug => ug.User).ToListAsync();
+            var userGame = await _context.UserGame
+                .Where(ug => ug.UserId == id)
+                .Include(ug => ug.Game)
+                .Include(ug => ug.User)
+                .OrderByDescending(ug => ug.Score)
+                .ToListAsync();
 
             if (userGame == null)
             {
@@ -48,7 +53,13 @@ namespace ZuydSpeelt.Controllers
             {
                 return NotFound();
             }
-            var userGame = await _context.UserGame.Where(ug => ug.GameId == id).Include(ug => ug.Game).Include(ug => ug.User).ToListAsync();
+            var userGame = await _context.UserGame
+                .Where(ug => ug.GameId == id)
+                .Include(ug => ug.Game)
+                .Include(ug => ug.User)
+                .OrderByDescending(ug => ug.Score)
+                .Take(25)
+                .ToListAsync();
 
             if (userGame == null)
             {

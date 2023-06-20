@@ -91,6 +91,7 @@ namespace ZuydSpeelt.Controllers
             {
                 return Problem("Entity set 'ZuydSpeeltContext.Rating'  is null.");
             }
+            var ratingId = _context.Rating.Max(r => r.Id) + 1;
             _context.Rating.Add(rating);
             await _context.SaveChangesAsync();
 
