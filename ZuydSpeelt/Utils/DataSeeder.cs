@@ -58,7 +58,7 @@ namespace ZuydSpeelt.Utils
             var gameFaker = new Faker<Game>()
                 .RuleFor(g => g.Id, _ => GameId++)
                 .RuleFor(g => g.CategoryId, f => f.Random.Number(1, Categories.Count))
-                .RuleFor(g => g.Title, f => f.Hacker.Phrase())
+                .RuleFor(g => g.Title, f => f.Hacker.Verb())
                 .RuleFor(g => g.CreatedAt, f => f.Date.Recent().ToUniversalTime())
                 .RuleFor(g => g.Popularity, f => f.Random.Number(1, 100));
 
