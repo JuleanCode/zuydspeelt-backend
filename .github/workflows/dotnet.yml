@@ -20,6 +20,36 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
 
+      - name: Success Notification
+        if: ${{ success() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Build succeeded on ${{ github.ref }}"
+          color: "success"
+
+      - name: Failure Notification
+        if: ${{ failure() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Build failed on ${{ github.ref }}"
+          color: "failure"
+
+      - name: Cancelled Notification
+        if: ${{ cancelled() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Build cancelled on ${{ github.ref }}"
+          color: "warning"
+
   scan-image:
     runs-on: ubuntu-latest
     needs: build
@@ -54,7 +84,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Deployment Successful"
+          title: "No vulnerabilities found in image"
           color: "success"
 
       - name: Failure Notification
@@ -64,7 +94,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Deployment Failed"
+          title: "Found vulnerabilities in image"
           color: "failure"
 
       - name: Cancelled Notification
@@ -74,5 +104,5 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Deployment Cancelled"
+          title: "Image scanning cancelled"
           color: "warning"
