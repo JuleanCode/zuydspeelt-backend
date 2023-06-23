@@ -27,7 +27,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Build succeeded on ${{ github.ref }}"
+          title: "Build succeeded"
           color: "success"
 
       - name: Failure Notification
@@ -37,7 +37,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Build failed on ${{ github.ref }}"
+          title: "Build failed"
           color: "failure"
 
       - name: Cancelled Notification
@@ -47,7 +47,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: "Build cancelled on ${{ github.ref }}"
+          title: "Build cancelled"
           color: "warning"
 
   scan-image:
