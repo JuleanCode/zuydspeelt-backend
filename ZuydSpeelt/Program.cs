@@ -47,10 +47,10 @@ builder.Services.AddOpenTelemetry()
                 .AddService(DiagnosticsConfig.ServiceName))
             .AddAspNetCoreInstrumentation()
             .AddConsoleExporter()
-            .AddJaegerExporter(jeagerOptions =>
+            .AddJaegerExporter(jaegerOptions =>
             {
-                jeagerOptions.AgentHost = "localhost";
-                jeagerOptions.AgentPort = 6831;
+                jaegerOptions.AgentHost = "jaeger";
+                jaegerOptions.AgentPort = 6831;
             }));
 
 // CORS configuration
@@ -67,6 +67,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseRouting(); // Add this line to enable endpoint routing
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,6 +79,9 @@ app.UseHttpsRedirection();
 
 // Enable CORS
 app.UseCors("AllowOrigin");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
@@ -96,8 +101,5 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();

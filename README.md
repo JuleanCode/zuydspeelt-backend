@@ -27,7 +27,6 @@ docker compose up -d
 
 This will run a local instance of the database and the API. The API will be available on port 8080. You can check if the API is running by navigating to [http://localhost:8080/api/users](http://localhost:8080/api/users). This will return a empty array if this is the first time you are running the API.
 
-
 # Stopping the Database and API
 
 ```bash
@@ -41,10 +40,8 @@ docker compose down
 # Remember that this command removes all the data from the database. If you want to keep the data, use the first command.
 ```
 
-# Considering PostgreSQL over SQL Server
+# Looking into telemetry using Jaeger
 
-PostgreSQL stands as a strong candidate for our project's database management system. Its open-source nature ensures cross-platform compatibility, promising consistent performance across various operating systems.
+Jaeger is a distributed tracing system. It is used to monitor and troubleshoot transactions in complex distributed systems. It is used in microservice architectures to monitor the communication between services.
 
-With a proven track record in handling large databases and complex queries, PostgreSQL could potentially provide faster API responses, thus improving our application's overall performance.
-
-A significant advantage of PostgreSQL over SQL Server is its support for Apple's Silicon Chip. Given the increasing adoption of devices using this chip, this support could greatly enhance our project's compatibility and usability.
+Jaeger is included in the Docker Compose file, so you will only need to start it like you always would using the commands in the previous section.
