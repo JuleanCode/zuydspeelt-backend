@@ -49,7 +49,7 @@ builder.Services.AddOpenTelemetry()
             .AddConsoleExporter()
             .AddJaegerExporter(jaegerOptions =>
             {
-                jaegerOptions.AgentHost = "jaeger";
+                jaegerOptions.AgentHost = Environment.GetEnvironmentVariable("JAEGER_HOST") ?? "jaeger";
                 jaegerOptions.AgentPort = 6831;
             }));
 
