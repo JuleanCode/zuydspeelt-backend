@@ -6,6 +6,62 @@ on:
   workflow_dispatch:
 
 jobs:
+  scan-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: build local container
+        uses: docker/build-push-action@v2
+        with:
+          tags: localbuild/testimage:latest
+          push: false
+          load: true
+
+      - name: Scan image
+        uses: anchore/scan-action@v3
+        with:
+          image: "localbuild/testimage:latest"
+          output-format: table
+          only-fixed: true
+
+      - name: Scan current project
+        uses: anchore/scan-action@v3
+        with:
+          path: "."
+          output-format: table
+
+      - name: Success Notification
+        if: ${{ success() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "No vulnerabilities found in image - deployment to development started"
+          color: "success"
+
+      - name: Failure Notification
+        if: ${{ failure() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Found vulnerabilities in image - deployment to development cancelled"
+          color: "failure"
+
+      - name: Cancelled Notification
+        if: ${{ cancelled() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Image scanning cancelled before deployment to developement"
+          color: "warning"
+
   deploy:
     runs-on: ubuntu-latest
 
@@ -55,3 +111,34 @@ jobs:
       - name: Trigger Azure Deployment
         run: |
           curl -d{} $CI_CD_URL
+          - name: Success Notification
+
+      - name: Success Notification
+        if: ${{ success() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Deployment to development successful"
+          color: "success"
+
+      - name: Failure Notification
+        if: ${{ failure() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Deployment to development failed"
+          color: "failure"
+
+      - name: Cancelled Notification
+        if: ${{ cancelled() }}
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: "Deployment to development cancelled"
+          color: "warning"
