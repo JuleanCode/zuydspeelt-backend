@@ -111,7 +111,6 @@ jobs:
       - name: Trigger Azure Deployment
         run: |
           curl -d{} $CI_CD_URL
-          - name: Success Notification
 
       - name: Success Notification
         if: ${{ success() }}
