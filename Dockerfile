@@ -9,6 +9,7 @@ COPY ["ZuydSpeelt/ZuydSpeelt.csproj", "ZuydSpeelt/"]
 RUN dotnet restore "ZuydSpeelt/ZuydSpeelt.csproj"
 COPY . .
 WORKDIR "/src/ZuydSpeelt"
+RUN dotnet add package NuGet.Protocol
 
 RUN dotnet build "ZuydSpeelt.csproj" -c Release -o /app/build
 FROM build AS publish
