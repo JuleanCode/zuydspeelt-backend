@@ -1,8 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using ZuydSpeelt.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -47,7 +43,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin", builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder.WithOrigins(
+                "http://localhost:3000",
+                "https://b2c6b-frontend-dev.azurewebsites.net",
+                "https://b2c6b-frontend-prod.azurewebsites.net"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
